@@ -153,7 +153,12 @@ export default async function CoachPage() {
           <h2>最近提交</h2>
           <span className="muted">实时记录优先 · 不展示学生代码</span>
         </div>
-        <div className="table-scroll">
+        <div
+          className="table-scroll"
+          tabIndex={0}
+          role="region"
+          aria-label="最近提交，可横向滚动"
+        >
           <table>
             <thead>
               <tr>
@@ -175,7 +180,13 @@ export default async function CoachPage() {
                     <VerdictBadge verdict={a.verdict} />
                   </td>
                   <td>{dateTime(a.createdAt)}</td>
-                  <td>{a.source === "live" ? "真实判题" : "模拟历史"}</td>
+                  <td>
+                    <span
+                      className={`source-badge ${a.source === "live" ? "live" : ""}`}
+                    >
+                      {a.source === "live" ? "真实判题" : "模拟历史"}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

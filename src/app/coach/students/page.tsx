@@ -13,7 +13,7 @@ export default async function StudentsPage() {
           <p>6 位演示成员。真实训练与模拟历史分别标注。</p>
         </div>
       </div>
-      <CoachNav />
+      <CoachNav current="members" />
       <MemberTable members={repository().team(user.id)} />
     </>
   );

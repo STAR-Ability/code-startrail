@@ -13,11 +13,20 @@ test("recommend → real sample → WA → Hint → AC → next → Coach sees l
   });
   await page.goto("/training");
   await expect(
-    page.getByRole("heading", { name: "下一道题，练得更准确。" }),
+    page.getByRole("heading", { name: "今天，也向前一步。" }),
   ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "主导航" }).getByRole("link"),
   ).toHaveCount(3);
+  const fullWidth = (await page.locator("main").boundingBox())!.width;
+  await page.getByRole("button", { name: "收起侧栏", exact: true }).click();
+  await expect(
+    page.getByRole("link", { name: "训练", exact: true }),
+  ).toBeVisible();
+  expect((await page.locator("main").boundingBox())!.width).toBeGreaterThan(
+    fullWidth,
+  );
+  await page.getByRole("button", { name: "展开侧栏", exact: true }).click();
   await page.screenshot({
     path: "test-results/training-desktop.png",
     fullPage: true,
@@ -84,6 +93,13 @@ test("recommend → real sample → WA → Hint → AC → next → Coach sees l
   await expect(page.locator(".recommendation h2")).not.toHaveText("两数之和");
   await page.getByRole("link", { name: "记录", exact: true }).click();
   await expect(page.locator(".history-item").first()).toContainText("两数之和");
+  await expect(
+    page.getByRole("heading", { name: "推荐如何变化" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "test-results/history-desktop.png",
+    fullPage: true,
+  });
   await page.getByLabel("演示角色切换").selectOption("coach");
   await expect(page).toHaveURL(/\/coach$/);
   await expect(
@@ -101,6 +117,11 @@ test("recommend → real sample → WA → Hint → AC → next → Coach sees l
     fullPage: true,
   });
   await page.goto("/coach/student/student");
+  await expect(
+    page
+      .getByRole("navigation", { name: "团队导航" })
+      .getByRole("link", { name: "成员", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
   await expect(page.locator(".history-item")).toContainText("2 次提交");
   await expect(
     page.getByText("最近 Agent 使用", { exact: true }),
@@ -169,6 +190,10 @@ test("profile persistence, protected APIs, server hint gating and private payloa
   await expect(page.getByRole("status")).toContainText("偏好已保存");
   await page.reload();
   await expect(page.getByLabel("每日训练时间")).toHaveValue("45");
+  await page.screenshot({
+    path: "test-results/profile-desktop.png",
+    fullPage: true,
+  });
   await page.goto("/problem/p02");
   await expect(
     page.getByRole("button", { name: "运行样例", exact: true }),
@@ -211,6 +236,26 @@ test("all pages render and mobile layout has no page overflow", async ({
       fullPage: true,
     });
   }
+  const menu = page.getByRole("button", { name: "打开导航菜单", exact: true });
+  await menu.click();
+  const drawer = page.getByRole("dialog", { name: "工作区导航" });
+  await expect(drawer).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "收起导航菜单", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    drawer.getByRole("link", { name: "码练星轨首页" }),
+  ).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(drawer.getByRole("link", { name: "个人资料" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(drawer).toHaveCount(0);
+  await expect(menu).toBeFocused();
+  await menu.click();
+  await drawer.getByRole("link", { name: "记录", exact: true }).click();
+  await expect(page).toHaveURL(/\/history$/);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await page.getByLabel("演示角色切换").selectOption("coach");
   await expect(
     page.getByRole("heading", { name: "了解过程，再安排下一步。" }),
@@ -228,5 +273,34 @@ test("all pages render and mobile layout has no page overflow", async ({
   await expect(
     page.getByRole("heading", { name: "一起训练的人。" }),
   ).toBeVisible();
+  await expect(
+    page
+      .getByRole("navigation", { name: "团队导航" })
+      .getByRole("link", { name: "成员", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  const members = page.getByRole("region", {
+    name: "成员训练情况，可横向滚动",
+  });
+  await members.focus();
+  await expect(members).toBeFocused();
+  for (const width of [320, 768, 1024]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of [
+      "/training",
+      "/problem/p03",
+      "/profile",
+      "/history",
+      "/coach/students",
+      "/coach/student/student",
+    ]) {
+      await page.goto(route);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 1,
+        ),
+        `${route} at ${width}px`,
+      ).toBe(true);
+    }
+  }
   expect((await page.goto("/problem/not-a-problem"))?.status()).toBe(404);
 });

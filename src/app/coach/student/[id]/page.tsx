@@ -31,7 +31,7 @@ export default async function StudentPage({
           </p>
         </div>
       </div>
-      <CoachNav />
+      <CoachNav current="members" />
       <div className="coach-detail">
         <div>
           <h2>最近训练与提交</h2>

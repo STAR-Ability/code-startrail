@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Shell } from "@/components/v2/shell";
 import { currentUser } from "@/server/auth";
 import "./globals.css";
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
+export const viewport: Viewport = { themeColor: "#ffffff" };
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

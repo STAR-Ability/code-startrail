@@ -53,19 +53,19 @@ export function CodeEditor({
             if (update.docChanged) change.current(update.state.doc.toString());
           }),
           EditorView.theme({
-            "&": { height: "390px", fontSize: "14px" },
+            "&": { height: "410px", fontSize: "14px" },
             ".cm-scroller": {
               overflow: "auto",
               fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-              lineHeight: "1.8",
+              lineHeight: "1.85",
             },
             ".cm-content": { padding: "20px 0" },
             ".cm-gutters": {
-              background: "#fafbfc",
+              background: "#ffffff",
               border: "none",
-              color: "#9299a6",
+              color: "#748196",
             },
-            ".cm-activeLine": { background: "#f5f4fa" },
+            ".cm-activeLine": { background: "#f7f9fc" },
             "&.cm-focused": { outline: "none" },
           }),
         ],

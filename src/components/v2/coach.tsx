@@ -1,14 +1,38 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  LayoutDashboard,
+  UsersRound,
+  Activity,
+} from "lucide-react";
 import { dateTime } from "@/lib/v2/client";
 import type { repository } from "@/server/repository";
 type Members = ReturnType<ReturnType<typeof repository>["team"]>;
-export function CoachNav() {
+export function CoachNav({
+  current = "overview",
+}: {
+  current?: "overview" | "members";
+}) {
   return (
     <nav className="coach-nav" aria-label="团队导航">
-      <Link href="/coach">团队概览</Link>
-      <Link href="/coach/students">成员</Link>
-      <Link href="/coach#issues">最近问题</Link>
+      <Link
+        href="/coach"
+        aria-current={current === "overview" ? "page" : undefined}
+      >
+        <LayoutDashboard size={16} aria-hidden="true" />
+        团队概览
+      </Link>
+      <Link
+        href="/coach/students"
+        aria-current={current === "members" ? "page" : undefined}
+      >
+        <UsersRound size={16} aria-hidden="true" />
+        成员
+      </Link>
+      <Link href="/coach#issues">
+        <Activity size={16} aria-hidden="true" />
+        最近问题
+      </Link>
     </nav>
   );
 }
@@ -25,7 +49,12 @@ export function CoachGate() {
 }
 export function MemberTable({ members }: { members: Members }) {
   return (
-    <div className="table-scroll">
+    <div
+      className="table-scroll"
+      tabIndex={0}
+      role="region"
+      aria-label="成员训练情况，可横向滚动"
+    >
       <table>
         <thead>
           <tr>
@@ -47,8 +76,11 @@ export function MemberTable({ members }: { members: Members }) {
                     className="member-name"
                     href={`/coach/student/${m.user.id}`}
                   >
-                    {m.user.name}
-                    <ArrowUpRight size={13} />
+                    <span className="member-avatar" aria-hidden="true">
+                      {m.user.name.slice(0, 1)}
+                    </span>
+                    <span>{m.user.name}</span>
+                    <ArrowUpRight size={14} aria-hidden="true" />
                   </Link>
                 </td>
                 <td>

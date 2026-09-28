@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock3 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock3, Code2 } from "lucide-react";
 import type { Recommendation, Verdict } from "@/lib/v2/types";
 export function VerdictBadge({
   verdict,
@@ -30,6 +30,9 @@ export function RecommendationCard({
   if (!value.problem)
     return (
       <section className="empty">
+        <span className="empty-icon">
+          <CheckCircle2 size={28} aria-hidden="true" strokeWidth={1.5} />
+        </span>
         <h2>这一阶段，先到这里。</h2>
         <p>{value.reason}</p>
         <Link className="button secondary" href="/profile">
@@ -41,18 +44,24 @@ export function RecommendationCard({
   return (
     <section className={`recommendation ${compact ? "compact" : ""}`}>
       <div className="recommendation-top">
-        <span className="eyebrow">你的下一道题</span>
-        <span className="small-label">Demo Recommendation</span>
+        <span className="recommendation-label">
+          <Code2 aria-hidden="true" size={16} /> 为你推荐
+        </span>
+        <span className="problem-number">
+          {p.id.slice(1)}
+          <small> / NEXT UP</small>
+        </span>
       </div>
       <div className="recommendation-content">
         <div>
+          <h2>{p.title}</h2>
           <div className="problem-meta">
             <span>难度 {p.difficulty} / 5</span>
             <span>
-              <Clock3 size={14} />约 {p.estimatedMinutes} 分钟
+              <Clock3 aria-hidden="true" size={14} />约 {p.estimatedMinutes}{" "}
+              分钟
             </span>
           </div>
-          <h2>{p.title}</h2>
           <p className="objective">{p.objective}</p>
           <div className="tags">
             {p.tags.map((t) => (
@@ -60,30 +69,24 @@ export function RecommendationCard({
             ))}
           </div>
         </div>
-        <div className="orbit-art" aria-hidden="true">
-          <div />
-          <div />
-          <span>{p.id.slice(1)}</span>
-          <i />
-        </div>
       </div>
       <div className="recommendation-reason">
-        <strong>为什么是这道题</strong>
+        <strong>为什么推荐</strong>
         <p>{value.reason}</p>
         <details>
-          <summary>查看推荐依据</summary>
+          <summary>推荐依据</summary>
           <ul>
             {value.basis.map((b) => (
               <li key={b}>{b}</li>
             ))}
           </ul>
+          <small>{p.source} · 规则推荐</small>
         </details>
       </div>
       <div className="recommendation-bottom">
         <Link className="button primary" href={`/problem/${p.id}`}>
-          开始训练 <ArrowRight size={17} />
+          开始训练 <ArrowRight aria-hidden="true" size={17} />
         </Link>
-        <span className="muted">{p.source}</span>
       </div>
     </section>
   );

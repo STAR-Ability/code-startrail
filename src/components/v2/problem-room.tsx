@@ -229,13 +229,13 @@ export function ProblemRoom({
     <>
       <div className="breadcrumb">
         <Link href="/training">
-          <ArrowLeft size={15} />
+          <ArrowLeft aria-hidden="true" size={15} />
           返回训练
         </Link>
         <span>/</span>
         <span>专注训练室</span>
         <span className="room-timer">
-          <Clock3 size={15} />
+          <Clock3 aria-hidden="true" size={15} />
           {duration(seconds)}
           <button
             className="icon-button"
@@ -243,7 +243,11 @@ export function ProblemRoom({
             onClick={() => setPaused(!paused)}
             aria-label={paused ? "继续计时" : "暂停计时"}
           >
-            {paused ? <Play size={14} /> : <Pause size={14} />}
+            {paused ? (
+              <Play aria-hidden="true" size={14} />
+            ) : (
+              <Pause aria-hidden="true" size={14} />
+            )}
           </button>
           <small>{paused ? "已暂停" : "仅累计本页可见时间"}</small>
         </span>
@@ -333,7 +337,7 @@ export function ProblemRoom({
                 disabled={!!busy || !!pending || !active}
                 onClick={() => judge("sample")}
               >
-                <Play size={15} />
+                <Play aria-hidden="true" size={15} />
                 {busy === "sample" ? "运行中…" : "运行样例"}
               </button>
               <button
@@ -341,7 +345,7 @@ export function ProblemRoom({
                 disabled={!!busy || !!pending || !active}
                 onClick={() => judge("submit")}
               >
-                <Send size={15} />
+                <Send aria-hidden="true" size={15} />
                 {busy === "submit" ? "判题中…" : "提交"}
               </button>
               <button
@@ -349,8 +353,9 @@ export function ProblemRoom({
                 disabled={!state}
                 onClick={() => setAgentOpen(!agentOpen)}
                 aria-expanded={agentOpen}
+                aria-controls="training-agent"
               >
-                <Sparkles size={16} />
+                <Sparkles aria-hidden="true" size={16} />
                 我卡住了
               </button>
             </div>
@@ -424,10 +429,14 @@ export function ProblemRoom({
             )}
           </section>
           {agentOpen && (
-            <section className="panel agent-panel">
+            <section
+              className="panel agent-panel"
+              id="training-agent"
+              aria-label="训练中的助手"
+            >
               <div className="panel-header">
                 <span>
-                  <Sparkles size={16} />
+                  <Sparkles aria-hidden="true" size={16} />
                   训练中的助手
                 </span>
                 <span className="small-label">Demo Agent · 预设内容</span>
@@ -436,6 +445,7 @@ export function ProblemRoom({
                 <label htmlFor="stuck">你现在卡在哪里？</label>
                 <select
                   id="stuck"
+                  name="stuckType"
                   value={stuck}
                   onChange={(e) => setStuck(e.target.value as StuckType)}
                 >
@@ -469,7 +479,7 @@ export function ProblemRoom({
                     onClick={() => hint("next")}
                   >
                     {busy === "hint" ? "正在整理…" : "给我下一步提示"}
-                    <ChevronRight size={15} />
+                    <ChevronRight aria-hidden="true" size={15} />
                   </button>
                   <button
                     className="text-button"
@@ -515,7 +525,7 @@ export function ProblemRoom({
       </div>
       {state && !active ? (
         <section className="completion">
-          <CheckCircle2 size={26} />
+          <CheckCircle2 aria-hidden="true" size={26} />
           <div>
             <h2>
               {state.training.status === "ac" ? "训练完成" : "本次训练已记录"}
@@ -538,7 +548,7 @@ export function ProblemRoom({
           </div>
           <Link href="/training" className="button primary">
             推荐下一道题
-            <ArrowRight size={16} />
+            <ArrowRight aria-hidden="true" size={16} />
           </Link>
           <button
             className="text-button"
@@ -567,7 +577,12 @@ export function ProblemRoom({
       {!!state?.submissions.length && (
         <section className="submission-log">
           <h2>本次提交记录</h2>
-          <div className="table-scroll">
+          <div
+            className="table-scroll"
+            tabIndex={0}
+            role="region"
+            aria-label="本次提交记录，可横向滚动"
+          >
             <table>
               <thead>
                 <tr>
