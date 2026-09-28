@@ -32,6 +32,12 @@ JSON 题包 → 校验 / 幂等 Seed → 数据库
 
 当前不做真实 LLM、完整训练教练 Agent 的长期规划/工具调用、多语言、RAG、能力评分、支付、排行榜、社区或分布式判题。旧 PRD 与长期 Agent 方案仍保存在 `docs/`，不代表本轮已实现。
 
+## 开发与贡献
+
+参与开发前请阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)，其中包含团队分支、测试、PR、AI Agent 和发布规范。
+
+核心流程：`feature/* → dev → main → Docker / GHCR`。普通开发通过 PR 进入 `dev`，版本完整验证后再 PR 到 `main`。
+
 ## 本地开发
 
 需要 Node.js 24、npm、Docker Engine/Desktop/Colima（Linux VM）及 Compose v2。第一次安装/构建需要网络，镜像准备好后的演示不依赖外网或 API Key。
@@ -226,7 +232,15 @@ npm run test:e2e         # 3100 端口，自动创建独立测试数据库
 
 本机已有 Chrome 可用 `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e`。浏览器测试使用真实 Judge，不 mock 判题；覆盖 WA→Hint→AC→下一题→Coach、提示门控、隐藏载荷、Profile 和 390px 布局。`node scripts/verify-container.mjs` 可检查 3000 端口的容器并截图。
 
-保留 `.github/workflows/docker.yml` 的 main/tag/手动发布流程，增加真实沙箱验收，发布 Web 与 Judge 两个 amd64/arm64 镜像：
+`.github/workflows/ci.yml` 在 PR 到 `dev` / `main`、push `dev` 或手动运行时执行 lint、单元测试、真实 Judge 测试、build、typecheck 和浏览器验收；失败时保存 Playwright 报告。普通功能通过 PR 进入 `dev`，版本通过 CI 和人工验收后再 PR 到 `main`。
+
+`.github/workflows/docker.yml` 专门构建并发布 Web 与 Judge 两个 `linux/amd64` / `linux/arm64` 镜像，使用 GitHub 自带的 `GITHUB_TOKEN` 登录 GHCR，并保留分开的构建缓存：
+
+- push / merge `main`，或手动选择 `main`：发布 `latest` 和 `sha-<完整 commit SHA>`。
+- 推送或手动选择 `v*` tag：仅允许发布已合入 `main` 的提交，生成对应版本 tag 和 SHA 镜像，不覆盖 `latest`。
+- push `dev` / 普通功能分支、PR 或手动选择 `dev`：不发布 Docker 镜像。
+
+镜像拥有者统一转换为小写，本仓库地址为 `ghcr.io/star-ability/acm-training-agent` 和 `ghcr.io/star-ability/acm-training-agent-judge`。下面的 `<owner>` 替换为 `star-ability`，`<commit>` 替换为已成功发布的完整提交号；部署由项目成员另行执行：
 
 ```bash
 export ACM_AGENT_IMAGE=ghcr.io/<owner>/acm-training-agent:sha-<commit>
@@ -235,6 +249,6 @@ docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d
 ```
 
-首次公开包需在 GHCR 设置可见性；私有包使用学校的只读拉取凭据。本轮仅修改工作流，没有推送、发布或替用户部署学校服务器。回滚先保留数据库备份，使用已验证的旧镜像；应用回滚不等同于数据库回滚。
+首次公开 Web 和 Judge 包需分别在 GitHub 组织的 **Packages → 对应包 → Package settings → Change visibility → Public** 设置可见性，并确保组织允许 Actions 写入 Packages。同名旧包若未关联本仓库，需先授予仓库 Actions 访问权限；私有包使用学校的只读拉取凭据。回滚先保留数据库备份，使用已验证的旧镜像；应用回滚不等同于数据库回滚。
 
 项目许可以仓库 [LICENSE](LICENSE) 正文为准。
