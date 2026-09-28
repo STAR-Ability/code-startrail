@@ -75,6 +75,8 @@ docker-compose.prod.yml
 
 ## 开发与贡献
 
+第一次使用本仓库，请从[仓库使用与团队协作指南](./仓库使用与团队协作指南.md)开始，按步骤完成下载、运行、开发和提交 PR。
+
 参与开发前请阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)，其中包含团队分支、测试、PR、AI Agent 和发布规范。
 
 核心流程：`feature/* → dev → main → Docker / GHCR`。普通开发通过 PR 进入 `dev`，版本完整验证后再 PR 到 `main`。
