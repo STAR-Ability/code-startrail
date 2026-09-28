@@ -76,18 +76,30 @@ npm run start
 
 Compose 使用 private cgroup namespace。镜像启动脚本仅在当前容器的 cgroup v2 子层级启用 cpu/memory/pids；显式设置 `-container-cred-start=10000`，确保用户程序以沙箱 UID 1000 执行。不能仅凭 `/config` 中的 UID 判断实际身份，专项测试会运行程序核验。
 
+服务器仅需 Docker Engine 与 Compose v2，无需在宿主机安装 Node.js、npm、C++ 编译器或数据库。首次启动会自动初始化数据库和题库。
+
 ```bash
-docker compose up -d --build
+docker compose up -d --build --wait --wait-timeout 120
 docker compose ps
 curl http://localhost:3000/api/health
 docker compose logs --tail 100 web judge
 ```
 
-默认只绑定 `127.0.0.1:3000`。学校局域网演示可明确设置：
+默认只绑定 `127.0.0.1:3000`。学校服务器需要通过 IP 直接访问时，在项目根目录首次复制 `.env.example` 为 `.env`（已有 `.env` 时直接编辑），设置：
+
+```dotenv
+BIND_ADDRESS=0.0.0.0
+PORT=3000
+COOKIE_SECURE=false
+```
+
+然后执行上述启动命令，访问 `http://服务器IP:3000`，并在服务器防火墙/云安全组允许需要访问的来源连接该端口。也可以临时指定监听地址：
 
 ```bash
-BIND_ADDRESS=0.0.0.0 docker compose up -d
+BIND_ADDRESS=0.0.0.0 docker compose up -d --build --wait --wait-timeout 120
 ```
+
+源码部署使用 `docker-compose.yml`；`docker-compose.prod.yml` 用于拉取已经发布的两个 GHCR 镜像，需要配置 `ACM_AGENT_IMAGE` 和 `JUDGE_IMAGE`，不会自动构建本地的新代码。服务器部署不要加载 `docker-compose.dev.yml`。
 
 公开访问应先配置学校反向代理、TLS、真实认证和专用 Judge 隔离环境。HTTPS 代理设置 `COOKIE_SECURE=true`、`APP_ORIGIN=https://你的域名`，保留原 Host；同步判题代理超时建议 120 秒、请求体限制 70 KB。Judge 不发布公网或宿主机端口。
 
@@ -102,6 +114,18 @@ BIND_ADDRESS=0.0.0.0 docker compose up -d
 Compose 给 Web 设置非 root、cap_drop、no-new-privileges、1 GB 内存与 PID 限制；Judge 控制器设 1.5 GB、2 CPU、并行度 2 和 PID 限制。日志每份 10 MB、保留 3 份。停止与重启保留 `training-data` 卷；`docker compose down -v` 会删除训练数据，不应用于普通升级。
 
 ### 网络不稳定 / 离线 Judge 构建
+
+如果拉取 `node:24-alpine` 或 `debian:bookworm-slim` 超时，可在 `.env` 中启用 `.env.example` 的 `NODE_IMAGE`、`DEBIAN_IMAGE`、`DEBIAN_MIRROR` 三项，或直接运行：
+
+```bash
+NODE_IMAGE=public.ecr.aws/docker/library/node:24-alpine \
+DEBIAN_IMAGE=public.ecr.aws/docker/library/debian:bookworm-slim \
+DEBIAN_MIRROR=mirrors.ustc.edu.cn \
+docker compose build
+docker compose up -d --no-build --wait --wait-timeout 120
+```
+
+这三个参数只改变构建下载源，默认仍使用 Docker Hub 官方镜像和 Debian 官方源。网络可达时，普通 `docker compose up -d --build` 即可构建并运行。Judge 的固定版本和 SHA-256 校验保持启用。
 
 Judge 固定为官方 **go-judge v1.13.0**，amd64/arm64 二进制的 SHA-256 写入 Dockerfile，下载后必须校验。普通 Dockerfile 在构建时下载；受限网络也可以预取同一二进制：
 
@@ -121,7 +145,15 @@ docker build -f judge/Dockerfile.offline \
   -t codestartrail-judge:1.13.0 judge
 ```
 
-准备 Web 镜像后使用 `docker compose up -d --no-build`。离线传输需要同时打包两个镜像：
+上面的离线 Judge 构建只跳过 GitHub 二进制下载；基础镜像和 Debian 软件包仍需网络或本地缓存。再构建最新 Web 镜像并启动：
+
+```bash
+# Docker Hub 不可达时，可在这条命令前设置 NODE_IMAGE=public.ecr.aws/docker/library/node:24-alpine
+docker compose build web
+docker compose up -d --no-build --wait --wait-timeout 120
+```
+
+完全离线的服务器应在联网构建机同时打包两个镜像：
 
 ```bash
 docker save acm-training-agent:latest codestartrail-judge:1.13.0 -o codestartrail-images.tar
@@ -129,6 +161,8 @@ docker save acm-training-agent:latest codestartrail-judge:1.13.0 -o codestartrai
 docker load -i codestartrail-images.tar
 docker compose up -d --no-build
 ```
+
+离线服务器还需要项目中的 `docker-compose.yml` 和部署用 `.env`；镜像包含运行所需的应用、题库和迁移。打包机器的镜像架构必须与服务器一致。
 
 不要通过关闭 cgroup / seccomp / 断网限制来解决部署失败；应修复 VM/宿主机权限或选择可运行的独立 Judge 主机。
 

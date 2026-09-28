@@ -3,6 +3,8 @@ services:
   web:
     build:
       context: .
+      args:
+        NODE_IMAGE: ${NODE_IMAGE:-node:24-alpine}
     image: acm-training-agent:latest
     ports:
       - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:3000"
@@ -33,6 +35,9 @@ services:
     build:
       context: .
       dockerfile: judge/Dockerfile
+      args:
+        DEBIAN_IMAGE: ${DEBIAN_IMAGE:-debian:bookworm-slim}
+        DEBIAN_MIRROR: ${DEBIAN_MIRROR:-deb.debian.org}
     image: codestartrail-judge:1.13.0
     # Namespace/cgroup controller; submitted programs run as sandbox UID 1000.
     # Deploy only on a dedicated demo host/VM. No host directories or Docker socket.

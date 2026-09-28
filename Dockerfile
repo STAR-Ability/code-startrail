@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM node:24-alpine AS base
+ARG NODE_IMAGE=node:24-alpine
+FROM ${NODE_IMAGE} AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
