@@ -73,6 +73,12 @@ docker-compose.prod.yml
 
 训练接口包括 `calculateSkillProfile`、`generateTrainingPlan`、`evaluateTrainingSession`、`recommendTeamFocus`。数据与判断逻辑不写死在页面中。
 
+## 开发与贡献
+
+参与开发前请阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)，其中包含团队分支、测试、PR、AI Agent 和发布规范。
+
+核心流程：`feature/* → dev → main → Docker / GHCR`。普通开发通过 PR 进入 `dev`，版本完整验证后再 PR 到 `main`。
+
 ## 本地开发
 
 推荐 **Node.js 24 LTS** 和 npm（Next.js 最低要求 Node.js 20.9）。
@@ -158,11 +164,11 @@ docker inspect --format '{{.State.Health.Status}}' acm-training-agent
 
 ## GHCR：学校服务器直接拉镜像
 
-工作流 `.github/workflows/docker.yml` 在 push 到 `main`、推送任意 Git tag 或手动触发时运行：
+`.github/workflows/ci.yml` 在 PR 到 `dev` / `main`、push `dev` 或手动运行时执行 lint、业务测试、build、typecheck 和浏览器验收。`.github/workflows/docker.yml` 只在 push 到 `main`、推送 `v*` tag 或手动选择 `main` / `v*` tag 时发布；手动选择 `dev` 会跳过发布：
 
-1. 安装依赖并执行 lint、业务测试、build 和浏览器验收。
+1. 通过 PR 的 CI 与 main 保护规则控制发布质量；版本 tag 必须指向已合入 `main` 的提交。
 2. 用 GitHub 自带的 `GITHUB_TOKEN` 登录 GHCR，无需另建发布密钥。
-3. 构建 `linux/amd64`、`linux/arm64` 镜像，发布 `latest`、`sha-<完整 commit SHA>`；Git tag 触发时同时生成对应 tag。
+3. 构建 `linux/amd64`、`linux/arm64` 镜像；`main` 发布 `latest`、`sha-<完整 commit SHA>`，`v*` tag 发布对应 tag 和 SHA，但不覆盖 `latest`。
 4. 镜像拥有者统一转换为小写，地址为 `ghcr.io/<github-user>/acm-training-agent`。
 
 首次发布后，进入 GitHub 用户/组织页面的 **Packages → acm-training-agent → Package settings → Change visibility → Public**。如果是组织仓库，需组织允许公开 Package，并允许 Actions 写入 Packages。镜像公开后学校服务器匿名拉取即可；首次发布尚未完成前占位地址不可用。若镜像已有同名包且未关联此仓库，需要先在 Package 设置中授予仓库 Actions 访问权限。
