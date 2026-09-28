@@ -1,0 +1,60 @@
+{
+  "id": "p16",
+  "slug": "queue",
+  "title": "排队服务",
+  "difficulty": 3,
+  "tags": [
+    "队列"
+  ],
+  "description": "处理 PUSH x 和 POP。POP 输出并移除队首；空队列输出 EMPTY。",
+  "inputDescription": "操作数 q（1≤q≤10^5），随后 q 行操作，|x|≤10^9。",
+  "outputDescription": "每次 POP 输出一行；没有 POP 时输出为空。",
+  "samples": [
+    {
+      "input": "5\nPUSH 3\nPUSH 4\nPOP\nPOP\nPOP\n",
+      "output": "3\n4\nEMPTY\n"
+    },
+    {
+      "input": "2\nPOP\nPUSH 1\n",
+      "output": "EMPTY\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "1\nPOP\n",
+      "output": "EMPTY\n"
+    },
+    {
+      "input": "3\nPUSH -1\nPOP\nPOP\n",
+      "output": "-1\nEMPTY\n"
+    },
+    {
+      "input": "4\nPUSH 0\nPUSH 0\nPOP\nPOP\n",
+      "output": "0\n0\n"
+    },
+    {
+      "input": "2\nPUSH 9\nPUSH 8\n",
+      "output": "\n"
+    },
+    {
+      "input": "6\nPUSH 1\nPOP\nPUSH 2\nPOP\nPUSH 3\nPOP\n",
+      "output": "1\n2\n3\n"
+    },
+    {
+      "input": "3\nPOP\nPOP\nPOP\n",
+      "output": "EMPTY\nEMPTY\nEMPTY\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 25,
+  "objective": "先到的人应该在什么时候被取出？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "先到的人应该在什么时候被取出？",
+    "只需维护队首与队尾，无需每次移动所有元素。",
+    "使用 queue 的 push、front、pop，并先判断 empty。"
+  ],
+  "solutionOutline": "按操作模拟 FIFO 队列，POP 时先判空。每个操作 O(1)，总时间 O(q)。"
+}

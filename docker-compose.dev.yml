@@ -1,0 +1,8 @@
+# Local development only. Never use this override for a server deployment.
+services:
+  judge:
+    networks: [sandbox, development]
+    ports:
+      - "127.0.0.1:5050:5050"
+networks:
+  development:

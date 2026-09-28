@@ -1,5 +1,4 @@
-import { LearningHome } from "@/components/learning-home";
-
+import { redirect } from "next/navigation";
 export default function Home() {
-  return <LearningHome />;
+  redirect("/training");
 }

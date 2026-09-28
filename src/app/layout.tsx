@@ -1,25 +1,26 @@
 import type { Metadata } from "next";
-import { AppShell } from "@/components/app-shell";
+import { Shell } from "@/components/v2/shell";
+import { currentUser } from "@/server/auth";
 import "./globals.css";
-import "./workspace.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "练序 CodePath · 让每一次练习都有方向",
-    template: "%s | 练序 CodePath",
+    default: "码练星轨 · 下一道题，练得更准确",
+    template: "%s | 码练星轨",
   },
   description:
-    "面向编程学习、算法竞赛、考研 408、求职面试与课堂教学的个人练习空间。交互式产品 Demo。",
+    "程序训练 + Agent 辅助。真实做题、按需提示，根据训练过程找到下一道题。",
   icons: { icon: "/icon.svg" },
 };
 
-export default function RootLayout({
+export const dynamic = "force-dynamic";
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN">
       <body>
-        <AppShell>{children}</AppShell>
+        <Shell user={await currentUser()}>{children}</Shell>
       </body>
     </html>
   );

@@ -1,0 +1,60 @@
+{
+  "id": "p04",
+  "slug": "sum-to-n",
+  "title": "从一加到 n",
+  "difficulty": 1,
+  "tags": [
+    "循环"
+  ],
+  "description": "求 1+2+…+n；n 为 0 时和为 0。",
+  "inputDescription": "一个整数，0 ≤ n ≤ 10^6。",
+  "outputDescription": "输出总和。",
+  "samples": [
+    {
+      "input": "3\n",
+      "output": "6\n"
+    },
+    {
+      "input": "5\n",
+      "output": "15\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0\n",
+      "output": "0\n"
+    },
+    {
+      "input": "1\n",
+      "output": "1\n"
+    },
+    {
+      "input": "2\n",
+      "output": "3\n"
+    },
+    {
+      "input": "999\n",
+      "output": "499500\n"
+    },
+    {
+      "input": "1000000\n",
+      "output": "500000500000\n"
+    },
+    {
+      "input": "100000\n",
+      "output": "5000050000\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 10,
+  "objective": "累加过程中要保留什么？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "累加过程中要保留什么？",
+    "总和可能超出 32 位整数范围。",
+    "可用 long long 循环累加，也可配对求和。"
+  ],
+  "solutionOutline": "使用 long long 累加 1 到 n，为 O(n)；等差数列公式 n(n+1)/2 为 O(1)。注意乘法也必须以 64 位进行。"
+}

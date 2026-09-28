@@ -1,0 +1,60 @@
+{
+  "id": "p02",
+  "slug": "parity",
+  "title": "奇偶信号",
+  "difficulty": 1,
+  "tags": [
+    "条件"
+  ],
+  "description": "判断整数 n 是奇数还是偶数。",
+  "inputDescription": "一个整数，−10^9 ≤ n ≤ 10^9。",
+  "outputDescription": "偶数输出 EVEN，否则输出 ODD。",
+  "samples": [
+    {
+      "input": "4\n",
+      "output": "EVEN\n"
+    },
+    {
+      "input": "7\n",
+      "output": "ODD\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0\n",
+      "output": "EVEN\n"
+    },
+    {
+      "input": "-1\n",
+      "output": "ODD\n"
+    },
+    {
+      "input": "-2\n",
+      "output": "EVEN\n"
+    },
+    {
+      "input": "1000000000\n",
+      "output": "EVEN\n"
+    },
+    {
+      "input": "999999999\n",
+      "output": "ODD\n"
+    },
+    {
+      "input": "-999999999\n",
+      "output": "ODD\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 10,
+  "objective": "偶数能被什么数整除？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "偶数能被什么数整除？",
+    "负数和零也需要判断。",
+    "判断 n%2 是否等于 0。"
+  ],
+  "solutionOutline": "余数为 0 时是偶数，其余为奇数。不要用 n%2==1 判断所有奇数，因为 C++ 负奇数的余数可能为 −1。O(1)。"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "p23",
+  "slug": "reachable",
+  "title": "可以到达的节点",
+  "difficulty": 4,
+  "tags": [
+    "图",
+    "搜索"
+  ],
+  "description": "无向图有 n 个节点编号 1…n，统计从节点 1 能到达多少节点，包含节点 1 自己。",
+  "inputDescription": "n,m（1≤n≤10^5，0≤m≤2×10^5）；随后 m 行 u,v 表示无向边。",
+  "outputDescription": "可达节点数量。",
+  "samples": [
+    {
+      "input": "4 3\n1 2\n2 3\n3 4\n",
+      "output": "4\n"
+    },
+    {
+      "input": "4 1\n2 3\n",
+      "output": "1\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "1 0\n",
+      "output": "1\n"
+    },
+    {
+      "input": "3 0\n",
+      "output": "1\n"
+    },
+    {
+      "input": "3 3\n1 2\n2 3\n3 1\n",
+      "output": "3\n"
+    },
+    {
+      "input": "5 3\n1 2\n2 3\n4 5\n",
+      "output": "3\n"
+    },
+    {
+      "input": "4 3\n1 2\n1 3\n1 4\n",
+      "output": "4\n"
+    },
+    {
+      "input": "5 4\n2 3\n3 4\n4 5\n5 2\n",
+      "output": "1\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 30,
+  "objective": "图中存在环时，怎样防止重复访问？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "图中存在环时，怎样防止重复访问？",
+    "无向边要在两个方向保存。",
+    "从节点 1 开始搜索，每个节点首次访问时计数。"
+  ],
+  "solutionOutline": "建邻接表后 BFS/迭代 DFS，并记录 visited，O(n+m)。节点1没有边时答案仍为1。"
+}

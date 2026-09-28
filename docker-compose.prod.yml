@@ -1,11 +1,50 @@
+name: codestartrail
 services:
   web:
-    image: ${ACM_AGENT_IMAGE:?请设置 ACM_AGENT_IMAGE 为 GHCR 镜像地址}
+    image: ${ACM_AGENT_IMAGE:?请设置 Web GHCR 镜像地址}
     ports:
-      - "${PORT:-3000}:3000"
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:3000"
     restart: unless-stopped
     init: true
     environment:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
+      DATABASE_PATH: /app/storage/codestartrail.sqlite
+      JUDGE_URL: http://judge:5050
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      APP_ORIGIN: ${APP_ORIGIN:-}
+    volumes:
+      - training-data:/app/storage
+    depends_on:
+      judge:
+        condition: service_healthy
+    networks: [frontend, sandbox]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 1g
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  judge:
+    image: ${JUDGE_IMAGE:?请设置 Judge GHCR 镜像地址}
+    # Namespace/cgroup controller; submitted programs run as sandbox UID 1000.
+    # Deploy only on a dedicated demo host/VM. No host directories or Docker socket.
+    privileged: true
+    cgroup: private
+    shm_size: 256m
+    restart: unless-stopped
+    networks: [sandbox]
+    mem_limit: 1536m
+    cpus: 2
+    pids_limit: 256
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+networks:
+  frontend:
+  sandbox:
+    internal: true
+volumes:
+  training-data:

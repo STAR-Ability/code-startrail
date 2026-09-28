@@ -1,0 +1,61 @@
+{
+  "id": "p15",
+  "slug": "brackets",
+  "title": "括号配对",
+  "difficulty": 3,
+  "tags": [
+    "栈",
+    "字符串"
+  ],
+  "description": "判断仅包含 ()[] 的非空字符串是否正确配对、嵌套。",
+  "inputDescription": "一个长度≤10^5 的括号字符串。",
+  "outputDescription": "合法输出 YES，否则 NO。",
+  "samples": [
+    {
+      "input": "([])\n",
+      "output": "YES\n"
+    },
+    {
+      "input": "([)]\n",
+      "output": "NO\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "(\n",
+      "output": "NO\n"
+    },
+    {
+      "input": ")\n",
+      "output": "NO\n"
+    },
+    {
+      "input": "[]\n",
+      "output": "YES\n"
+    },
+    {
+      "input": "()[]()\n",
+      "output": "YES\n"
+    },
+    {
+      "input": "[([])]\n",
+      "output": "YES\n"
+    },
+    {
+      "input": "(()\n",
+      "output": "NO\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 25,
+  "objective": "右括号应该匹配最早还是最近的未匹配左括号？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "右括号应该匹配最早还是最近的未匹配左括号？",
+    "空栈遇到右括号时如何处理？",
+    "遇左括号入栈；遇右括号检查栈顶并弹出，结束检查栈为空。"
+  ],
+  "solutionOutline": "用栈维护未配对左括号，匹配失败立即 NO；末尾栈必须为空。O(n) 时间、O(n) 空间。"
+}

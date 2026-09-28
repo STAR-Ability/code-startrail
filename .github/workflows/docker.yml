@@ -25,9 +25,18 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+      - name: Prepare pinned execution sandbox
+        run: |
+          python3 scripts/download-judge.py amd64
+          docker build -f judge/Dockerfile.offline -t codestartrail-judge:1.13.0 judge
+          docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --no-build --wait judge
+      - run: npm run test:judge
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - name: Sandbox logs
+        if: failure()
+        run: docker compose logs --tail 100 judge
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -71,3 +80,21 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - uses: docker/metadata-action@v5
+        id: judge-meta
+        with:
+          images: ${{ steps.image.outputs.name }}-judge
+          tags: |
+            type=raw,value=latest
+            type=sha,format=long,prefix=sha-
+            type=ref,event=tag
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: judge/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.judge-meta.outputs.tags }}
+          labels: ${{ steps.judge-meta.outputs.labels }}
+          cache-from: type=gha,scope=judge
+          cache-to: type=gha,scope=judge,mode=max
