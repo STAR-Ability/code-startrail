@@ -1,0 +1,19 @@
+﻿topic,label,pattern,method,limitation
+teaching_pace,授课节奏与消化时间,讲.*慢|进度|速度|语速|跟不上|自我思考的时间|减慢|慢一点|讲的有点快,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+teaching_clarity,讲解方式与细致程度,更.*清楚|讲.*清晰|吐字|声音|听不|听得|理解的方式|朗诵|念PPT|讲细|详细|讲的细|讲解方式|有点乱|不能以我们理解,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+practice_feedback,讲练结合与作业反馈,做过的题讲解|题写完了要再讲|讲课的时候让我们做点题|上次留的题|多练|直接写题|敲代码|写代码时间|题目的讲解|讲题的时候多做|多讲点题|讲竞赛题|在课上通过|预习|减少军训,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+knowledge_gap,基础语法与知识缺口,基础|特殊名词|每个字符|一个知识点不会|知识点越卡顿|没学|语法|概念,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+learning_path,学习路线、目标与计划,顺序|途径|计划|方案|系统的知识|系统学习|阶段该|该怎么学习|没有头绪|明确的目标|明确的学习目标|学习目标|入队|目标|规划|训练学习内容|推荐学习内容|学习好迷茫,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+problem_recommendation,适配题目与迁移练习,刷基础题|类似题型|练习题|现阶段的习题|目标和题目|逐步增加难度|出一些运用,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+progressive_hint,逐步引导与保留思考,逐步(?:给|提供|讲解|分析)|一步一步|不给|不直接|不要给完整|引导|辅助自己思考|帮助学习思考|起到点的作用,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+debugging,错误定位与原因解释,错误|错在哪里|代码错|bug|debug|纠错|代码问题|检查问题|wa|出错,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+algorithm_explanation,解题思路与知识解释,算法|思路|解题能力|分析应如何入手|知识点并详解|知识点讲解|逐步讲解|给出知识点|解题但|基础的东西还没讲|基础知识|每个字符|基础的编程,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+problem_comprehension,题意理解与表达,题目.*清晰|解释题目|题意|题目描述,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+review,错题复习与巩固,错题|做错|巩固|反复|知识点.*总结|知识点 并总结,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+personalization,个人水平与薄弱点,每个人|个人能力|不同水平|我的水平|什么水平|记录.*薄弱|了解薄弱|分层|根据情况|根据成员,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+human_help,真人答疑与求助负担,麻烦学长|来解答|互相指导|学长下来,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+organization_access,时间地点与组织安排,寝室|网上学习|网课，每次|太远|报销|放假|军训|时间合理分配,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+motivation,信心、乐趣与参与动力,零基础能学会|乐趣|可能acm就是这样,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+challenge_level,更高难度与竞赛目标,过于简单|问难题|ICPC|竞赛中获得奖项|竞赛题和算法,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+ai_boundaries,AI 使用边界与资源,依赖ai|Token|人性化,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签
+unspecified,诉求不够具体,,reviewed_regex_multilabel,单分析者编码；未估计编码者一致性；未按推测补标签

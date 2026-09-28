@@ -1,0 +1,12 @@
+{
+  "source_sha256_unchanged": true,
+  "row_count": 78,
+  "single_choice_totals_match": true,
+  "ai_denominators_match": true,
+  "duration_bins_sum": true,
+  "summary_and_topics_recomputed_from_cleaned_csv": true,
+  "png_files_decode": 27,
+  "report_links_resolve": true,
+  "identifier_pattern_scan": "passed (patterns plus manual review; not an anonymity guarantee)",
+  "no_raw_open_text_or_system_metadata_exported": true
+}

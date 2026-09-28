@@ -1,0 +1,9 @@
+﻿metric,count,denominator,note
+wants_hint_or_socratic,52,78,描述性交集，分母为全样本；条件概率需另算
+basic_barrier_but_not_basic_qa_feature,39,78,描述性交集，分母为全样本；条件概率需另算
+no_ai_details_but_ai_coping,1,78,描述性交集，分母为全样本；条件概率需另算
+frequent_ai_and_nonmastery,14,78,描述性交集，分母为全样本；条件概率需另算
+usually_verifies_and_nonmastery,23,78,描述性交集，分母为全样本；条件概率需另算
+refuses_longterm_recording,1,78,描述性交集，分母为全样本；条件概率需另算
+requests_full_code_or_minor_edit,4,78,描述性交集，分母为全样本；条件概率需另算
+high_hours_and_nonmastery,7,78,描述性交集，分母为全样本；条件概率需另算

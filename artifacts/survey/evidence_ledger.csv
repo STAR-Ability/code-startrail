@@ -1,0 +1,11 @@
+﻿id,finding,source,level
+E01,语法及以下 53/78；无竞赛经历 75/78,Q2、Q3；survey_summary.csv,样本内自报事实
+E02,基础43、算法选择37、代码Bug29；前三项去重覆盖68/78,Q5；training_pain_points.csv、pain_coverage.csv,样本内自报事实
+E03,看懂题解写不出 53/78（67.9%）,Q10；survey_summary.csv,自报学习断点，非客观能力测量
+E04,AI错答 30/71（42.3%）；AI后未掌握 27/71（38.0%）,Q17；ai_usage.csv,自报经历
+E05,水平适配题目 57/78（73.1%）；唯一优先 17/78（21.8%）,Q18、Q19；feature_preference_consistency.csv,陈述偏好，不是使用意愿转化率
+E06,提示/提问引导去重 52/78；唯一优先提问引导 16/78,Q18、Q19；behavior_overlaps.csv,陈述偏好
+E07,经常/偶尔没问出口 61/78；不会描述问题 33/78（42.3%）,Q8、Q9；survey_summary.csv,自报经历
+E08,愿记录错误知识点 65/78（83.3%）；AI对话 19/78（24.4%）,Q22；recording_preferences.csv,问卷偏好，不构成授权
+E09,Q24讲解11、节奏11、讲练11条（n=38实质文本）,Q24；open_question_topics.csv,单分析者多标签编码
+E10,愿意/非常愿意试用 65/78,Q23；survey_summary.csv,陈述试用偏好，无联系信息，无真实留存
