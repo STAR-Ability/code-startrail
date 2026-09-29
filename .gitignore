@@ -17,3 +17,6 @@ artifacts/
 data/
 planning/
 prompts/
+storage/
+judge/.cache/
+*.sqlite*

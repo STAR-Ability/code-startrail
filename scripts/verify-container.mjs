@@ -18,14 +18,10 @@ try {
   page.on("pageerror", (error) => errors.push(error.message));
   for (const [name, route] of [
     ["home", "/"],
-    ["student", "/student"],
-    ["session", "/student/session/1"],
-    ["coach", "/coach"],
-    ["innovation", "/innovation"],
-    ["account", "/account"],
-    ["profile", "/account?tab=profile"],
-    ["preferences", "/account?tab=preferences"],
-    ["data", "/account?tab=data"],
+    ["training", "/training"],
+    ["problem", "/problem/p01"],
+    ["history", "/history"],
+    ["profile", "/profile"],
   ]) {
     const response = await page.goto(`${baseURL}${route}`, {
       waitUntil: "networkidle",
@@ -41,8 +37,8 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const [name, route] of [
     ["home", "/"],
-    ["coach", "/coach"],
-    ["account", "/account"],
+    ["problem", "/problem/p01"],
+    ["profile", "/profile"],
   ]) {
     await page.goto(`${baseURL}${route}`, { waitUntil: "networkidle" });
     await page.screenshot({
@@ -54,6 +50,12 @@ try {
     );
     if (overflow) throw new Error(`${route} has horizontal overflow`);
   }
+  await page.getByLabel("演示角色切换").selectOption("coach");
+  await page.waitForURL("**/coach");
+  await page.screenshot({
+    path: resolve(output, "coach-mobile.png"),
+    fullPage: true,
+  });
   if (errors.length) throw new Error(errors.join("\n"));
   console.log(`PASS browser errors: 0. Screenshots: ${output}`);
 } finally {

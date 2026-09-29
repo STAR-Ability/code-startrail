@@ -1,0 +1,60 @@
+{
+  "id": "p05",
+  "slug": "digit-sum",
+  "title": "数位之和",
+  "difficulty": 1,
+  "tags": [
+    "循环"
+  ],
+  "description": "计算一个非负整数的各位数字之和。",
+  "inputDescription": "整数 n，0 ≤ n ≤ 10^18。",
+  "outputDescription": "输出数位和。",
+  "samples": [
+    {
+      "input": "123\n",
+      "output": "6\n"
+    },
+    {
+      "input": "90\n",
+      "output": "9\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0\n",
+      "output": "0\n"
+    },
+    {
+      "input": "1\n",
+      "output": "1\n"
+    },
+    {
+      "input": "999999999999999999\n",
+      "output": "162\n"
+    },
+    {
+      "input": "1000000000000000000\n",
+      "output": "1\n"
+    },
+    {
+      "input": "10101\n",
+      "output": "3\n"
+    },
+    {
+      "input": "808080\n",
+      "output": "24\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 10,
+  "objective": "如何取出最右侧的一位？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "如何取出最右侧的一位？",
+    "除以 10 后，剩余的数发生了什么变化？",
+    "重复取余和整除，累加每次取出的数字。"
+  ],
+  "solutionOutline": "循环执行 ans+=n%10、n/=10，直到 n 为 0。初始 n=0 时答案也是 0。O(位数)。"
+}

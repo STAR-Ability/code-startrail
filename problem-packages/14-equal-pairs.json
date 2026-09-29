@@ -1,0 +1,61 @@
+{
+  "id": "p14",
+  "slug": "equal-pairs",
+  "title": "相等数对",
+  "difficulty": 3,
+  "tags": [
+    "哈希",
+    "数组"
+  ],
+  "description": "统计满足 i<j 且 a[i]=a[j] 的下标对数量。",
+  "inputDescription": "n（1≤n≤10^5），随后 n 个整数，绝对值≤10^9。",
+  "outputDescription": "输出数对数量。",
+  "samples": [
+    {
+      "input": "4\n1 2 2 3\n",
+      "output": "1\n"
+    },
+    {
+      "input": "1\n5\n",
+      "output": "0\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "4\n1 1 1 1\n",
+      "output": "6\n"
+    },
+    {
+      "input": "4\n0 0 -1 -1\n",
+      "output": "2\n"
+    },
+    {
+      "input": "4\n9 8 7 6\n",
+      "output": "0\n"
+    },
+    {
+      "input": "5\n1 2 1 2 1\n",
+      "output": "4\n"
+    },
+    {
+      "input": "2\n-1000000000 -1000000000\n",
+      "output": "1\n"
+    },
+    {
+      "input": "100\n0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99\n",
+      "output": "0\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 25,
+  "objective": "某个数出现三次，可以组成几对？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "某个数出现三次，可以组成几对？",
+    "新读入一个值，能与之前多少个相同值配对？",
+    "先将已有频次加入答案，再将当前频次加一。"
+  ],
+  "solutionOutline": "维护频次数组或 map，每读一个值 x，ans+=cnt[x] 后 cnt[x]++。也可汇总 c(c-1)/2；答案用 long long。"
+}

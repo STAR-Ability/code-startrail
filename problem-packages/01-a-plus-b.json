@@ -1,0 +1,60 @@
+{
+  "id": "p01",
+  "slug": "a-plus-b",
+  "title": "两数之和",
+  "difficulty": 1,
+  "tags": [
+    "输入输出"
+  ],
+  "description": "计算两个整数 a 和 b 的和。",
+  "inputDescription": "一行两个整数，−10^9 ≤ a,b ≤ 10^9。",
+  "outputDescription": "输出 a+b。",
+  "samples": [
+    {
+      "input": "1 2\n",
+      "output": "3\n"
+    },
+    {
+      "input": "-3 5\n",
+      "output": "2\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0 0\n",
+      "output": "0\n"
+    },
+    {
+      "input": "-1 -2\n",
+      "output": "-3\n"
+    },
+    {
+      "input": "1000000000 1000000000\n",
+      "output": "2000000000\n"
+    },
+    {
+      "input": "-1000000000 -1000000000\n",
+      "output": "-2000000000\n"
+    },
+    {
+      "input": "7 -7\n",
+      "output": "0\n"
+    },
+    {
+      "input": "42 58\n",
+      "output": "100\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 10,
+  "objective": "输入里有几个数？输出需要保留什么？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "输入里有几个数？输出需要保留什么？",
+    "比较加法前后数据的范围。",
+    "用整数变量读入两个值，再输出它们的和。"
+  ],
+  "solutionOutline": "依次读入 a、b，输出 a+b。使用 long long 可稳妥处理和的范围。时间和额外空间均为 O(1)。"
+}

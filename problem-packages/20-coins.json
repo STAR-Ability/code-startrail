@@ -1,0 +1,60 @@
+{
+  "id": "p20",
+  "slug": "coins",
+  "title": "兑换硬币",
+  "difficulty": 4,
+  "tags": [
+    "贪心"
+  ],
+  "description": "用面额 1、5、10 的硬币凑出 n，每种无限。求最少硬币数。",
+  "inputDescription": "整数 n，0≤n≤10^9。",
+  "outputDescription": "最少硬币数。",
+  "samples": [
+    {
+      "input": "16\n",
+      "output": "3\n"
+    },
+    {
+      "input": "9\n",
+      "output": "5\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0\n",
+      "output": "0\n"
+    },
+    {
+      "input": "1\n",
+      "output": "1\n"
+    },
+    {
+      "input": "5\n",
+      "output": "1\n"
+    },
+    {
+      "input": "10\n",
+      "output": "1\n"
+    },
+    {
+      "input": "99\n",
+      "output": "14\n"
+    },
+    {
+      "input": "1000000000\n",
+      "output": "100000000\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 30,
+  "objective": "在这组面额里，几个小硬币能被一个大硬币替代？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "在这组面额里，几个小硬币能被一个大硬币替代？",
+    "1 和 5 的使用数量各自有什么上限？",
+    "先取 10，再取 5，剩余用 1；说明为何不会错。"
+  ],
+  "solutionOutline": "10 可替换两个 5，5 可替换五个 1；最优解中 5 最多一个、1 最多四个。依次整除取余，O(1)。此结论不能推广到任意面额。"
+}

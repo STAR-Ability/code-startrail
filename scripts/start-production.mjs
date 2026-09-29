@@ -31,6 +31,8 @@ const server = spawn(process.execPath, [resolve(standalone, "server.js")], {
     NODE_ENV: "production",
     HOSTNAME: "0.0.0.0",
     PORT: port,
+    APP_ROOT: root,
+    DATABASE_PATH: process.env.DATABASE_PATH || resolve(root, "storage/codestartrail.sqlite"),
   },
 });
 for (const signal of ["SIGINT", "SIGTERM"])

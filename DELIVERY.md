@@ -1,4 +1,6 @@
-# Demo 改版交付记录
+# Demo V1 历史交付记录
+
+> 本文件保留 2026-09-25 的历史状态，页面、品牌、架构和启动说明不适用于当前 V2。当前交付见 [Demo V2 交付与验证](docs/DEMO_V2_DELIVERY.md) 和 [README](README.md)。
 
 2026-09-25。基于 `CODEX_DEMO_PROMPT.md`，按最新反馈扩展产品方向、重做视觉与个人中心。
 

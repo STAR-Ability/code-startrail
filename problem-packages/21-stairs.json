@@ -1,0 +1,60 @@
+{
+  "id": "p21",
+  "slug": "stairs",
+  "title": "登上台阶",
+  "difficulty": 4,
+  "tags": [
+    "动态规划"
+  ],
+  "description": "共有 n 级台阶，每次走 1 或 2 级，求到达顶部的方法数。n=0 时有一种方法（不走）。",
+  "inputDescription": "整数 n，0≤n≤10^5。",
+  "outputDescription": "方法数对 1000000007 取模。",
+  "samples": [
+    {
+      "input": "3\n",
+      "output": "3\n"
+    },
+    {
+      "input": "4\n",
+      "output": "5\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "0\n",
+      "output": "1\n"
+    },
+    {
+      "input": "1\n",
+      "output": "1\n"
+    },
+    {
+      "input": "2\n",
+      "output": "2\n"
+    },
+    {
+      "input": "10\n",
+      "output": "89\n"
+    },
+    {
+      "input": "100\n",
+      "output": "782204094\n"
+    },
+    {
+      "input": "100000\n",
+      "output": "967618232\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 30,
+  "objective": "最后一步可能从哪里来？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "最后一步可能从哪里来？",
+    "用 f[i] 表示到第 i 级的方法数，明确 f[0]。",
+    "f[i]=f[i-1]+f[i-2]，每步取模；可只保留两个状态。"
+  ],
+  "solutionOutline": "从最后一步分类得到递推，初始 f[0]=f[1]=1。滚动变量 O(n) 时间、O(1) 空间。"
+}

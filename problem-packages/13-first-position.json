@@ -1,0 +1,61 @@
+{
+  "id": "p13",
+  "slug": "first-position",
+  "title": "第一次出现的位置",
+  "difficulty": 3,
+  "tags": [
+    "二分",
+    "数组"
+  ],
+  "description": "在非降序数组中找出 x 第一次出现的位置（从 1 开始），不存在则输出 −1。",
+  "inputDescription": "n,x（1≤n≤10^5，|x|≤10^9）；n 个非降序整数，绝对值≤10^9。",
+  "outputDescription": "输出位置或 −1。",
+  "samples": [
+    {
+      "input": "5 3\n1 2 3 3 5\n",
+      "output": "3\n"
+    },
+    {
+      "input": "3 4\n1 2 3\n",
+      "output": "-1\n"
+    }
+  ],
+  "hiddenTests": [
+    {
+      "input": "1 0\n0\n",
+      "output": "1\n"
+    },
+    {
+      "input": "1 1\n0\n",
+      "output": "-1\n"
+    },
+    {
+      "input": "4 2\n2 2 2 2\n",
+      "output": "1\n"
+    },
+    {
+      "input": "4 -5\n-5 -5 -2 0\n",
+      "output": "1\n"
+    },
+    {
+      "input": "5 9\n1 3 5 7 9\n",
+      "output": "5\n"
+    },
+    {
+      "input": "5 4\n1 3 5 7 9\n",
+      "output": "-1\n"
+    }
+  ],
+  "timeLimitMs": 1000,
+  "memoryLimitMb": 128,
+  "estimatedMinutes": 25,
+  "objective": "重复值出现时，需要哪一个位置？",
+  "source": "码练星轨 · 原创 Demo 题",
+  "version": 1,
+  "hints": [
+    "重复值出现时，需要哪一个位置？",
+    "寻找第一个不小于 x 的值。",
+    "缩小左右区间后，仍需检查候选值确实等于 x。"
+  ],
+  "solutionOutline": "使用 lower_bound 得到第一个≥x的位置；若越界或值不等输出−1，否则输出下标+1。查询 O(log n)，读取 O(n)。"
+}

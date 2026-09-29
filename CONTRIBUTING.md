@@ -6,15 +6,15 @@
 
 ## 分支定义
 
-| 分支 | 用途 | 从哪里创建 / 合并到哪里 |
-| --- | --- | --- |
-| `main` | 稳定、可部署版本；不进行日常开发，原则上禁止直接 push；更新触发镜像发布 | 主要接收 `dev` 的发布 PR |
-| `dev` | 日常开发集成、Demo 联调与验收 | 接收功能和修复；发布时 PR 到 `main` |
-| `feature/*` | 功能，如 `feature/problem-recommendation`、`feature/student-dashboard`、`feature/coach-dashboard`、`feature/recommend-agent` | 从 `dev` 创建，PR 到 `dev` |
-| `fix/*` | 普通 Bug，如 `fix/login-redirect`、`fix/agent-response-parser` | 从 `dev` 创建，PR 到 `dev` |
-| `experiment/*` | 尚不确定是否采用的实验方案 | 从 `dev` 创建，验证后 PR 到 `dev` |
-| `chore/*` | CI、Docker、GitHub 配置、依赖与工程维护 | 从 `dev` 创建，PR 到 `dev` |
-| `hotfix/*` | 已发布版本的紧急问题 | 从 `main` 创建，验证后 PR 到 `main`，随后回灌 `dev` |
+| 分支             | 用途                                                                                                                                | 从哪里创建 / 合并到哪里                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `main`         | 稳定、可部署版本；不进行日常开发，原则上禁止直接 push；更新触发镜像发布                                                             | 主要接收`dev` 的发布 PR                                |
+| `dev`          | 日常开发集成、Demo 联调与验收                                                                                                       | 接收功能和修复；发布时 PR 到`main`                     |
+| `feature/*`    | 功能，如`feature/problem-recommendation`、`feature/student-dashboard`、`feature/coach-dashboard`、`feature/recommend-agent` | 从`dev` 创建，PR 到 `dev`                            |
+| `fix/*`        | 普通 Bug，如`fix/login-redirect`、`fix/agent-response-parser`                                                                   | 从`dev` 创建，PR 到 `dev`                            |
+| `experiment/*` | 尚不确定是否采用的实验方案                                                                                                          | 从`dev` 创建，验证后 PR 到 `dev`                     |
+| `chore/*`      | CI、Docker、GitHub 配置、依赖与工程维护                                                                                             | 从`dev` 创建，PR 到 `dev`                            |
+| `hotfix/*`     | 已发布版本的紧急问题                                                                                                                | 从`main` 创建，验证后 PR 到 `main`，随后回灌 `dev` |
 
 普通 `feature/* → main` 禁止。CI 的 `validate` 会拒绝向 `main` 提交的其他来源，仅允许同仓库 `dev` 或 `hotfix/*`。服务端强制拦截还需要管理员启用下文的 main Ruleset；只有文档和 Workflow 不等于已禁止直接 push。
 
@@ -86,15 +86,15 @@ git push origin v0.1.0
 
 使用简单 Conventional Commits，`类型: 简短说明`，中英文均可，不强制 scope 或工具校验。
 
-| 类型 | 示例 |
-| --- | --- |
-| `feat:` | `feat: add problem recommendation agent` |
-| `fix:` | `fix: handle empty recommendation result` |
-| `refactor:` | `refactor: split recommendation service` |
-| `test:` | `test: add recommendation agent tests` |
-| `docs:` | `docs: update deployment guide` |
-| `style:` | `style: improve mobile training layout` |
-| `chore:` | `chore: update github actions` |
+| 类型          | 示例                                        |
+| ------------- | ------------------------------------------- |
+| `feat:`     | `feat: add problem recommendation agent`  |
+| `fix:`      | `fix: handle empty recommendation result` |
+| `refactor:` | `refactor: split recommendation service`  |
+| `test:`     | `test: add recommendation agent tests`    |
+| `docs:`     | `docs: update deployment guide`           |
+| `style:`    | `style: improve mobile training layout`   |
+| `chore:`    | `chore: update github actions`            |
 
 ## AI Agent Development
 
@@ -109,18 +109,18 @@ git push origin v0.1.0
 
 ## CI 与 Docker 发布
 
-| 事件 | CI / validate | Docker Publish |
-| --- | --- | --- |
-| push `feature/*` / `fix/*` / `chore/*` / `experiment/*` | 否；有打开的 PR 时会因 PR 更新运行 | 否 |
-| PR → `dev` | 是 | 否 |
-| push `dev`（包括合并 PR） | 是，验证实际集成提交 | 否 |
-| PR → `main` | 是，额外检查来源分支 | 否 |
-| push / merge `main` | 否，质量门禁在 PR 与 Ruleset | 是 |
-| push `v*` tag | 否，只能发布已进入 `main` 的提交 | 是，不更新 latest |
-| push 其他 tag | 否 | 否 |
-| 手动运行 CI | 是 | 否 |
-| 手动运行 Docker：`main` | 否 | 是 |
-| 手动运行 Docker：`dev` / 普通功能分支 | 否 | 跳过 publish |
+| 事件                                                           | CI / validate                      | Docker Publish    |
+| -------------------------------------------------------------- | ---------------------------------- | ----------------- |
+| push`feature/*` / `fix/*` / `chore/*` / `experiment/*` | 否；有打开的 PR 时会因 PR 更新运行 | 否                |
+| PR →`dev`                                                   | 是                                 | 否                |
+| push`dev`（包括合并 PR）                                     | 是，验证实际集成提交               | 否                |
+| PR →`main`                                                  | 是，额外检查来源分支               | 否                |
+| push / merge`main`                                           | 否，质量门禁在 PR 与 Ruleset       | 是                |
+| push`v*` tag                                                 | 否，只能发布已进入`main` 的提交  | 是，不更新 latest |
+| push 其他 tag                                                  | 否                                 | 否                |
+| 手动运行 CI                                                    | 是                                 | 否                |
+| 手动运行 Docker：`main`                                      | 否                                 | 是                |
+| 手动运行 Docker：`dev` / 普通功能分支                        | 否                                 | 跳过 publish      |
 
 手动运行 Docker 若选择 `v*` tag，也必须满足 main 祖先校验，且不会更新 latest。PR 的 README 修改仍经过 CI；普通分支的文档修改不发布镜像，文档合入 `main` 仍按发布分支规则构建。
 
